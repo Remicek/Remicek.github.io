@@ -6,10 +6,21 @@
 <title>Download HowYouDoin</title>
 <meta name="description" content="All your chats in one inbox: WhatsApp, Messenger, Instagram, Telegram, Signal, Slack, Bluesky, LinkedIn, X and Matrix, straight from your Android phone.">
 <link rel="icon" href="img/logo.svg" type="image/svg+xml">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="apple-touch-icon" href="img/apple-touch-icon.png">
+<link rel="canonical" href="https://howyoudoin.app/">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://howyoudoin.app/">
+<meta property="og:title" content="HowYouDoin · All your chats. One place.">
+<meta property="og:description" content="WhatsApp, Messenger, Instagram, Telegram, Signal, Slack and more in one private inbox on your Android phone.">
+<meta property="og:image" content="https://howyoudoin.app/img/og-image.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#276BFF">
+<link rel="preload" href="fonts/manrope.woff2" as="font" type="font/woff2" crossorigin>
 <style>
+  /* Manrope (SIL OFL, fonts/OFL.txt), self-hosted: no requests to Google */
+  @font-face { font-family: "Manrope"; src: url("fonts/manrope.woff2") format("woff2"); font-weight: 200 800; font-display: swap; }
   /* The app's own look: its blue-to-violet logo gradient, midnight navy text, soft lavender surfaces.
      Layout: header, a two-column hero (pitch and download left, phones right), networks, three promises, install steps. */
   :root {
@@ -148,6 +159,14 @@
   .note p { margin: 0 0 10px; }
   .note p:last-child { margin: 0; }
 
+  /* Screens */
+  .screens { padding: 56px 0; border-top: 1px solid var(--line); }
+  .screens-grid { display: grid; grid-template-columns: minmax(0, 300px) 1fr; gap: 32px; align-items: start; }
+  .screens video { width: 100%; aspect-ratio: 9 / 16; border-radius: 26px; background: #0D1430; display: block; object-fit: cover;
+    box-shadow: 0 30px 60px -20px rgba(16, 25, 54, .45); }
+  .strip { display: flex; gap: 14px; overflow-x: auto; padding: 4px 2px 12px; scroll-snap-type: x mandatory; min-width: 0; }
+  .strip img { flex: 0 0 auto; width: 190px; height: auto; aspect-ratio: 9 / 16; border-radius: 16px; scroll-snap-align: start; border: 1px solid var(--line); }
+
   footer { border-top: 1px solid var(--line); padding: 28px 0 40px; color: var(--muted); font-size: 14px; }
   footer .bar { flex-wrap: wrap; }
   footer nav { gap: 18px; font-weight: 500; font-size: 14px; }
@@ -158,7 +177,8 @@
     .phone { width: 220px; }
     .phone.front { transform: translateX(-50px) rotate(-3deg); }
     .phone.back { transform: translateX(90px) rotate(5deg); }
-    .grid3, .install { grid-template-columns: 1fr; }
+    .grid3, .install, .screens-grid { grid-template-columns: 1fr; }
+    .screens video { max-width: 300px; margin-inline: auto; }
   }
   @media (max-width: 600px) { nav a:not(.btn) { display: none; } }
   @media (max-width: 480px) {
@@ -181,6 +201,7 @@
     </a>
     <nav aria-label="Main">
       <a href="#how-it-works">How it works</a>
+      <a href="#screens">Screens</a>
       <a href="#install">Install</a>
       <a class="btn small" href="https://github.com/Remicek/howyoudoin-app/releases/latest">Download</a>
     </nav>
@@ -251,6 +272,25 @@
     </div>
   </section>
 
+  <section class="screens" id="screens">
+    <div class="wrap">
+      <h2>See it in action</h2>
+      <div class="screens-grid">
+        <video src="img/promo.mp4" poster="img/promo-poster.jpg" muted loop playsinline autoplay preload="metadata" aria-label="HowYouDoin promo video"></video>
+        <div class="strip" tabindex="0" aria-label="HowYouDoin screenshots">
+          <img src="img/screens/01_inbox.jpg" alt="All your messages, one inbox" loading="lazy" width="540" height="960">
+          <img src="img/screens/02_networks.jpg" alt="All your accounts, on this device" loading="lazy" width="540" height="960">
+          <img src="img/screens/03_chat.jpg" alt="Reply, react and send photos anywhere" loading="lazy" width="540" height="960">
+          <img src="img/screens/04_privacy.jpg" alt="Private by design. Runs on your phone." loading="lazy" width="540" height="960">
+          <img src="img/screens/05_themes.jpg" alt="Make it yours: themes and dark mode" loading="lazy" width="540" height="960">
+          <img src="img/screens/06_dark.jpg" alt="Beautiful in dark mode" loading="lazy" width="540" height="960">
+          <img src="img/screens/07_contacts.jpg" alt="Start a chat on any network" loading="lazy" width="540" height="960">
+        </div>
+      </div>
+      <p class="meta">The people and messages in these screens are invented for the demo.</p>
+    </div>
+  </section>
+
   <section class="wrap install" id="install">
     <div>
       <h2>Install in a minute</h2>
@@ -273,11 +313,12 @@
   <div class="wrap bar">
     <span>© 2026 HowYouDoin</span>
     <nav aria-label="Legal">
-      <a href="https://github.com/Remicek/howyoudoin-app/blob/main/privacy-policy.md">Privacy policy</a>
-      <a href="https://github.com/Remicek/howyoudoin-app/blob/main/terms-of-use.md">Terms of use</a>
+      <a href="privacy.html">Privacy policy</a>
+      <a href="terms.html">Terms of use</a>
       <a href="https://github.com/Remicek/howyoudoin-app/releases">All versions</a>
     </nav>
   </div>
 </footer>
+<script src="site.js"></script>
 </body>
 </html>
