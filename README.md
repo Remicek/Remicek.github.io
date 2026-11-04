@@ -4,7 +4,7 @@ All your chats in one inbox: WhatsApp, Messenger, Instagram, Telegram, Signal, S
 Matrix, connected straight from your Android phone. No HowYouDoin account, no HowYouDoin servers.
 
 - Website: https://howyoudoin.app
-- Download: [latest release](https://github.com/Remicek/howyoudoin-app/releases/latest) (the `.apk` file; Android 8 or
+- Download: [latest release](https://github.com/Remicek/howyoudoin/releases/latest) (the `.apk` file; Android 8 or
   newer). Google Play and the App Store are coming.
 - [Privacy policy](https://howyoudoin.app/privacy.html) · [Terms of use](https://howyoudoin.app/terms.html)
   (sources: [privacy-policy.md](privacy-policy.md), [terms-of-use.md](terms-of-use.md); run `python3 build-legal.py` after editing them)
