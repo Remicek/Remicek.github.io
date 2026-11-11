@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Download HowYouDoin</title>
+<meta name="description" content="All your chats in one inbox: WhatsApp, Messenger, Instagram, Telegram, Signal, Slack, Bluesky, LinkedIn, X and Matrix, straight from your Android phone. Plus free, end-to-end encrypted video calls.">
+<link rel="icon" href="img/logo.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="img/apple-touch-icon.png">
+<link rel="canonical" href="https://howyoudoin.app/">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://howyoudoin.app/">
+<meta property="og:title" content="HowYouDoin · All your chats. One place.">
+<meta property="og:description" content="WhatsApp, Messenger, Instagram, Telegram, Signal, Slack and more in one private inbox on your Android phone.">
+<meta property="og:image" content="https://howyoudoin.app/img/og-image.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#276BFF">
+<link rel="preload" href="fonts/manrope.woff2" as="font" type="font/woff2" crossorigin>
+<style>
+  /* Manrope (SIL OFL, fonts/OFL.txt), self-hosted: no requests to Google */
+  @font-face { font-family: "Manrope"; src: url("fonts/manrope.woff2") format("woff2"); font-weight: 200 800; font-display: swap; }
+  /* The app's own look: its blue-to-violet logo gradient, midnight navy text, soft lavender surfaces.
+     Layout: header, a two-column hero (pitch and download left, phones right), networks, three promises, install steps. */
+  :root {
+    --blue: #276BFF;
+    --violet: #7138F5;
+    --ink: #101936;
+    --muted: #5A6283;
+    --bg: #FAFAFE;
+    --surface: #EEF0FB;
+    --line: #DFE3F5;
+    --on-brand: #FFFFFF;
+    --brand: linear-gradient(135deg, var(--blue), var(--violet));
+    --font: "Manrope", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    --radius: 20px;
+    color-scheme: light;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --ink: #EEF0FF; --muted: #A3A9C9; --bg: #0B1022; --surface: #161D38; --line: #252E52;
+      color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"] {
+    --ink: #EEF0FF; --muted: #A3A9C9; --bg: #0B1022; --surface: #161D38; --line: #252E52;
+    color-scheme: dark;
+  }
+
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0; background: var(--bg); color: var(--ink); overflow-x: clip;
+    font-family: var(--font); font-size: 17px; line-height: 1.55;
+  }
+  a { color: inherit; }
+  img { max-width: 100%; display: block; }
+  :focus-visible { outline: 3px solid var(--blue); outline-offset: 3px; border-radius: 8px; }
+
+  .wrap { width: min(1120px, 100% - 32px); margin-inline: auto; }
+
+  /* Header */
+  header { padding: 20px 0; }
+  .bar { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+  .brand { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+  .brand img { width: 38px; height: 38px; }
+  .wordmark { font-weight: 800; font-size: 24px; letter-spacing: -0.5px; }
+  .wordmark span {
+    background: var(--brand); -webkit-background-clip: text; background-clip: text; color: transparent;
+  }
+  nav { display: flex; align-items: center; gap: 20px; font-weight: 600; font-size: 15px; }
+  nav a { text-decoration: none; color: var(--muted); }
+  nav a:hover { color: var(--ink); }
+
+  /* Buttons */
+  .btn {
+    display: inline-flex; align-items: center; gap: 10px; text-decoration: none; font-weight: 700;
+    border-radius: 999px; padding: 16px 28px; font-size: 18px; color: var(--on-brand); background: var(--brand);
+    box-shadow: 0 10px 30px -10px rgba(113, 56, 245, .55);
+    transition: transform .15s ease, box-shadow .15s ease;
+  }
+  .btn:hover { transform: translateY(-1px); box-shadow: 0 14px 34px -10px rgba(113, 56, 245, .7); }
+  .btn svg { width: 22px; height: 22px; flex: none; }
+  .btn.small { padding: 10px 18px; font-size: 15px; box-shadow: none; }
+  nav .btn.small { color: var(--on-brand); }
+
+  /* Store placeholders: not links yet */
+  .stores { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 18px; }
+  .store {
+    display: inline-flex; align-items: center; gap: 10px; padding: 8px 16px 8px 12px; border-radius: 14px;
+    border: 1px dashed var(--line); background: var(--surface); color: var(--muted); font-weight: 700; font-size: 15px;
+    line-height: 1.15; cursor: default;
+  }
+  .store svg { width: 24px; height: 24px; flex: none; }
+  .store small { display: block; font-weight: 500; font-size: 11px; letter-spacing: .3px; }
+
+  /* Hero */
+  .hero { display: grid; grid-template-columns: 1.05fr .95fr; gap: 48px; align-items: center; padding: 40px 0 64px; }
+  h1 {
+    font-size: clamp(40px, 6vw, 68px); line-height: 1.04; letter-spacing: -2px; margin: 0 0 20px;
+    font-weight: 800; text-wrap: balance;
+  }
+  h1 em { font-style: normal; background: var(--brand); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .lead { font-size: 20px; color: var(--muted); max-width: 34em; margin: 0 0 32px; }
+  .cta { display: flex; flex-wrap: wrap; align-items: center; gap: 16px 24px; }
+  .meta { color: var(--muted); font-size: 14px; margin: 16px 0 0; }
+  .meta a { font-weight: 600; }
+
+  .phones { position: relative; display: flex; justify-content: center; min-height: 560px; overflow: clip; overflow-clip-margin: 40px; }
+  .phone {
+    width: 260px; border-radius: 38px; padding: 9px; background: #0D1430;
+    box-shadow: 0 30px 60px -20px rgba(16, 25, 54, .45), 0 0 0 1px rgba(255,255,255,.06) inset;
+  }
+  .phone img { border-radius: 30px; width: 100%; aspect-ratio: 1080 / 2424; object-fit: cover; }
+  .phone.front { position: relative; z-index: 2; transform: translateX(-60px) rotate(-3deg); }
+  .phone.back { position: absolute; top: 48px; transform: translateX(110px) rotate(5deg); opacity: .96; }
+  .glow {
+    position: absolute; inset: 10% 5% 0; z-index: 0; border-radius: 50%;
+    background: radial-gradient(closest-side, rgba(39,107,255,.28), rgba(113,56,245,.12) 60%, transparent);
+    filter: blur(10px);
+  }
+
+  /* Networks */
+  .networks { padding: 8px 0 56px; }
+  .label { font-size: 13px; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase; color: var(--muted); margin: 0 0 14px; }
+  .pills { display: flex; flex-wrap: wrap; gap: 10px; list-style: none; padding: 0; margin: 0; }
+  .pills li {
+    display: inline-flex; align-items: center; gap: 8px; padding: 8px 14px; border-radius: 999px;
+    background: var(--surface); border: 1px solid var(--line); font-weight: 600; font-size: 15px;
+  }
+  .pills i { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
+
+  /* Promises */
+  section h2 { font-size: clamp(28px, 3.6vw, 40px); letter-spacing: -1px; line-height: 1.12; margin: 0 0 28px; text-wrap: balance; }
+  .promises { padding: 56px 0; border-top: 1px solid var(--line); }
+  .grid3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  .card { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 26px; }
+  .card h3 { margin: 14px 0 8px; font-size: 19px; }
+  .card p { margin: 0; color: var(--muted); font-size: 16px; }
+  .icon {
+    width: 44px; height: 44px; border-radius: 14px; display: grid; place-items: center;
+    background: var(--brand); color: var(--on-brand);
+  }
+  .icon svg { width: 22px; height: 22px; }
+
+  /* Install */
+  .install { padding: 56px 0; border-top: 1px solid var(--line); display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: start; }
+  ol.steps { list-style: none; counter-reset: s; padding: 0; margin: 0; display: grid; gap: 18px; }
+  ol.steps li { counter-increment: s; display: grid; grid-template-columns: 40px 1fr; gap: 14px; align-items: start; }
+  ol.steps li::before {
+    content: counter(s); width: 40px; height: 40px; border-radius: 50%; display: grid; place-items: center;
+    font-weight: 800; color: var(--on-brand); background: var(--brand);
+  }
+  ol.steps b { display: block; }
+  ol.steps span { color: var(--muted); font-size: 16px; }
+  .note { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 24px; font-size: 15px; color: var(--muted); }
+  .note b { color: var(--ink); }
+  .note p { margin: 0 0 10px; }
+  .note p:last-child { margin: 0; }
+
+  /* Screens */
+  .screens { padding: 56px 0; border-top: 1px solid var(--line); }
+  .screens-grid { display: grid; grid-template-columns: minmax(0, 300px) 1fr; gap: 32px; align-items: start; }
+  .screens video { width: 100%; aspect-ratio: 9 / 16; border-radius: 26px; background: #0D1430; display: block; object-fit: cover;
+    box-shadow: 0 30px 60px -20px rgba(16, 25, 54, .45); }
+  .strip { display: flex; gap: 14px; overflow-x: auto; padding: 4px 2px 12px; scroll-snap-type: x mandatory; min-width: 0; }
+  .strip img { flex: 0 0 auto; width: 190px; height: auto; aspect-ratio: 9 / 16; border-radius: 16px; scroll-snap-align: start; border: 1px solid var(--line); }
+
+  footer { border-top: 1px solid var(--line); padding: 28px 0 40px; color: var(--muted); font-size: 14px; }
+  footer .bar { flex-wrap: wrap; }
+  footer nav { gap: 18px; font-weight: 500; font-size: 14px; }
+
+  @media (max-width: 900px) {
+    .hero { grid-template-columns: 1fr; gap: 24px; padding-top: 16px; }
+    .phones { min-height: 470px; }
+    .phone { width: 220px; }
+    .phone.front { transform: translateX(-50px) rotate(-3deg); }
+    .phone.back { transform: translateX(90px) rotate(5deg); }
+    .grid3, .install, .screens-grid { grid-template-columns: 1fr; }
+    .screens video { max-width: 300px; margin-inline: auto; }
+  }
+  @media (max-width: 600px) { nav a:not(.btn) { display: none; } }
+  @media (max-width: 480px) {
+    .phones { min-height: 400px; }
+    .phone { width: 180px; border-radius: 30px; padding: 7px; }
+    .phone img { border-radius: 24px; }
+    .phone.front { transform: translateX(-38px) rotate(-3deg); }
+    .phone.back { transform: translateX(70px) rotate(5deg); top: 36px; }
+    .btn { width: 100%; justify-content: center; }
+  }
+  @media (prefers-reduced-motion: reduce) { .btn { transition: none; } }
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap bar">
+    <a class="brand" href="#" aria-label="HowYouDoin home">
+      <img src="img/logo.svg" alt="">
+      <span class="wordmark">howyou<span>doin</span></span>
+    </a>
+    <nav aria-label="Main">
+      <a href="#how-it-works">How it works</a>
+      <a href="#calls">Calls</a>
+      <a href="#screens">Screens</a>
+      <a href="#install">Install</a>
+      <a class="btn small" href="https://github.com/Remicek/howyoudoin/releases/latest">Download</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <div class="wrap hero">
+    <div>
+      <h1>All your chats.<br><em>One place.</em></h1>
+      <p class="lead">WhatsApp, Messenger, Instagram, Telegram, Signal, Slack and more in one inbox, connected straight from your Android phone. Plus free, end-to-end encrypted video calls with anyone you chat with. No HowYouDoin account, and your messages never touch our servers.</p>
+      <div class="cta">
+        <a class="btn" href="https://github.com/Remicek/howyoudoin/releases/latest">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg>
+          Download for Android
+        </a>
+      </div>
+      <div class="stores" aria-label="App stores">
+        <span class="store"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M5 3.5v17a.8.8 0 0 0 1.2.7l14.6-8.5a.8.8 0 0 0 0-1.4L6.2 2.8A.8.8 0 0 0 5 3.5z"/></svg><span><small>Coming soon to</small>Google Play</span></span>
+        <span class="store"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><path d="M9 16l3-8 3 8M10 13.5h4"/></svg><span><small>Coming soon to</small>App Store</span></span>
+      </div>
+      <p class="meta">Android 8 or newer · Free and open source (AGPL) · From GitHub releases for now · <a href="#install">How to install</a></p>
+    </div>
+    <div class="phones" aria-hidden="true">
+      <div class="glow"></div>
+      <div class="phone back"><img src="img/chat.jpg" alt="" loading="lazy"></div>
+      <div class="phone front"><img src="img/inbox.jpg" alt="The HowYouDoin inbox with chats from WhatsApp, Messenger, Bluesky and Discord"></div>
+    </div>
+  </div>
+
+  <div class="wrap networks">
+    <p class="label">Works with</p>
+    <ul class="pills">
+      <li><i style="background:#25D366"></i>WhatsApp</li>
+      <li><i style="background:#0084FF"></i>Messenger</li>
+      <li><i style="background:#E1306C"></i>Instagram</li>
+      <li><i style="background:#2AABEE"></i>Telegram</li>
+      <li><i style="background:#3A76F0"></i>Signal</li>
+      <li><i style="background:#E01E5A"></i>Slack</li>
+      <li><i style="background:#1185FE"></i>Bluesky</li>
+      <li><i style="background:#0A66C2"></i>LinkedIn</li>
+      <li><i style="background:var(--ink)"></i>X</li>
+      <li><i style="background:#5865F2"></i>Discord</li>
+      <li><i style="background:#0DBD8B"></i>Matrix</li>
+    </ul>
+  </div>
+
+  <section class="promises" id="how-it-works">
+    <div class="wrap">
+      <h2>Private by design</h2>
+      <div class="grid3">
+        <div class="card">
+          <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="6" y="2" width="12" height="20" rx="3"/><path d="M11 18h2"/></svg></div>
+          <h3>Your chats stay on your phone</h3>
+          <p>Messages, contacts and logins are kept only on this phone, encrypted.</p>
+        </div>
+        <div class="card">
+          <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 8h13l-3-3"/><path d="M20 16H7l3 3"/></svg></div>
+          <h3>Straight to the networks</h3>
+          <p>The app talks only to the networks you connect, the same way their own apps do.</p>
+        </div>
+        <div class="card">
+          <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17.5 19a4.5 4.5 0 0 0 .5-9 6 6 0 0 0-11.5 1.5A4 4 0 0 0 7 19h10.5z"/><path d="m3 3 18 18"/></svg></div>
+          <h3>Your messages skip our servers</h3>
+          <p>No accounts to create. We never see, keep or sell your messages. Only calls through a link use our server, and they're end-to-end encrypted.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="promises" id="calls">
+    <div class="wrap">
+      <h2>Free video calls</h2>
+      <div class="grid3">
+        <div class="card">
+          <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="6" width="14" height="12" rx="2"/><path d="m16 10 6-3v10l-6-3"/></svg></div>
+          <h3>Call anyone you chat with</h3>
+          <p>On any network: HowYouDoin sends a link in the chat and they join from their browser. No app or account needed.</p>
+        </div>
+        <div class="card">
+          <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></div>
+          <h3>End-to-end encrypted</h3>
+          <p>The call's key is only in the link you send. Our call server connects you but can't see or hear the call.</p>
+        </div>
+        <div class="card">
+          <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></div>
+          <h3>Free every month</h3>
+          <p>60 minutes of video and 10 hours of voice, every month. The person you call never pays.</p>
+        </div>
+      </div>
+      <p class="meta" style="margin-top:24px"><b>Want more?</b> HowYouDoin Premium adds 50 hours of video and 100 hours of voice a month, sharper video, calls up to 4 hours and up to 3 accounts of each network. Try it free for 7 days in the Google Play version of the app; cancel anytime.</p>
+    </div>
+  </section>
+
+  <section class="screens" id="screens">
+    <div class="wrap">
+      <h2>See it in action</h2>
+      <div class="screens-grid">
+        <video src="img/promo.mp4" poster="img/promo-poster.jpg" muted loop playsinline autoplay preload="metadata" aria-label="HowYouDoin promo video"></video>
+        <div class="strip" tabindex="0" aria-label="HowYouDoin screenshots">
+          <img src="img/screens/01_inbox.jpg" alt="All your messages, one inbox" loading="lazy" width="540" height="960">
+          <img src="img/screens/02_calls.jpg" alt="Free video calls with anyone" loading="lazy" width="540" height="960">
+          <img src="img/screens/03_call_link.jpg" alt="They join from a link. No app needed." loading="lazy" width="540" height="960">
+          <img src="img/screens/04_encrypted.jpg" alt="Calls are end-to-end encrypted" loading="lazy" width="540" height="960">
+          <img src="img/screens/05_networks.jpg" alt="All your accounts, on this device" loading="lazy" width="540" height="960">
+          <img src="img/screens/06_privacy.jpg" alt="Your messages never touch our servers" loading="lazy" width="540" height="960">
+          <img src="img/screens/07_premium.jpg" alt="More with Premium. Try 7 days free." loading="lazy" width="540" height="960">
+          <img src="img/screens/08_themes.jpg" alt="Make it yours: themes and dark mode" loading="lazy" width="540" height="960">
+        </div>
+      </div>
+      <p class="meta">The people and messages in these screens are invented for the demo.</p>
+    </div>
+  </section>
+
+  <section class="wrap install" id="install">
+    <div>
+      <h2>Install in a minute</h2>
+      <ol class="steps">
+        <li><div><b>Download the app</b><span>Tap Download for Android on your phone. On the GitHub releases page, open the newest version and tap the .apk file.</span></div></li>
+        <li><div><b>Open the file</b><span>If Android asks, allow your browser to install apps, then tap Install.</span></div></li>
+        <li><div><b>Connect your networks</b><span>Open HowYouDoin and pick a network. WhatsApp, Telegram and Signal link like a desktop app; the others log in on their own website inside the app.</span></div></li>
+      </ol>
+      <p class="meta" style="margin-top:24px">Not sure yet? Tap <b>Try demo mode</b> on the first screen to look around with sample chats.</p>
+    </div>
+    <aside class="note">
+      <p><b>Good to know</b></p>
+      <p>HowYouDoin is an unofficial app, not made or supported by the networks it connects. Some of them don't allow third-party apps and may limit or block an account that uses one, so the app warns you before each connection.</p>
+      <p>Calls on the other networks go through a link (above); Matrix calls are built in. Google Messages and Google Voice aren't available: Google blocks signing in from apps like this one.</p>
+    </aside>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap bar">
+    <span>© 2026 HowYouDoin</span>
+    <nav aria-label="Legal">
+      <a href="privacy.html">Privacy policy</a>
+      <a href="terms.html">Terms of use</a>
+      <a href="https://github.com/Remicek/howyoudoin/releases">All versions</a>
+    </nav>
+  </div>
+</footer>
+<script src="site.js"></script>
+</body>
+</html>
